@@ -1,0 +1,623 @@
+#######################################
+###    Default Widget Properties    ###
+#######################################
+<MDTextField>
+    font_size: '25sp'
+    #hint_font_size: '100sp'
+    #helper_font_size: '100sp'
+    mode: 'round'
+    fill_color_normal: "white"
+    fill_color_focus: "white"
+    line_color_normal: app.theme_cls.primary_color
+    text_color_normal: app.theme_cls.primary_color
+    helper_text_color_normal: app.theme_cls.primary_color 
+    hint_text_color_normal: app.theme_cls.primary_color
+    hint_text_color_focus: app.theme_cls.primary_color if app.theme_cls.theme_style == "Dark" else "black"
+    text_color_focus: app.theme_cls.primary_color if app.theme_cls.theme_style == "Dark" else "black"
+
+
+<CustomPasswordField>
+    size_hint_y: None
+    height: text_field.height
+    pass_text: text_field
+    MDTextField:
+        id: text_field
+        hint_text: root.hint_text
+        text: root.text
+        password: True
+        required: True
+          
+
+    MDIconButton:
+        id: password_open_icon
+        icon: "eye-off"
+        pos_hint: {'x': 0,, 'y': }
+        pos_hint: {"center_y": .5}
+        pos: text_field.width - self.width + dp(8), 0
+        theme_text_color: "Custom"
+        text_color: app.theme_cls.primary_color
+        on_release:
+            self.icon = "eye" if self.icon == "eye-off" else "eye-off"
+            text_field.password = False if text_field.password is True else True 
+
+<CustomPasswordRegField>
+    size_hint_y: None
+    height: password_field.height
+    pass_text: password_field
+    MDTextField:
+        id: password_field
+        hint_text: root.hint_text
+        text: root.text
+        font_size: "18sp"
+        password: True
+        required: True
+          
+
+    MDIconButton:
+        id: password_open_icon
+        icon: "eye-off"
+        pos_hint: {"center_y": .5}
+        pos: password_field.width - self.width + dp(8), 0
+        theme_text_color: "Custom"
+        text_color: app.theme_cls.primary_color
+        on_release:
+            self.icon = "eye" if self.icon == "eye-off" else "eye-off"
+            password_field.password = False if password_field.password is True else True 
+
+
+<RegDialogContent>
+    orientation: "vertical"
+    spacing: "16dp"
+    padding: "16dp"
+    size_hint_y: None
+    height: "240dp"
+
+    MDIcon:
+        icon: 'check-circle-outline'
+        theme_text_color: "Custom"
+        text_color: 'green'
+        font_size: '80sp'
+        pos_hint: {'center_x': 0.5}
+    MDLabel:
+        text: "Registration Successful"
+        bold: True
+        font_style: 'H5'
+        theme_text_color: 'Custom'
+        text_color: 'orange'
+        halign: "center"
+    MDLabel:
+        text: "You can now login using your registration information"
+        bold: True
+        font_style: 'Subtitle2'
+        theme_text_color: 'Custom'
+        text_color: 'gray'
+        halign: "center"
+    
+    
+            
+<SwipeToDeleteItem>:
+    size_hint_y: None
+    height: content.height
+    on_swipe_complete: root.on_swipe_complete(root.rec_id)
+    MDCardSwipeLayerBox:
+        padding: "8dp"
+        md_bg_color: "F44336"
+        MDIconButton:
+            icon: "trash-can"
+            pos_hint: {"center_y": .5}
+            #on_release: app.main_layout.remove_item(root.rec_id)4
+            on_release: root.remove_item(root.rec_id)
+                
+
+    MDCardSwipeFrontBox:
+
+        ThreeLineListItem:
+            id: content
+            rec_id: root.rec_id
+            text: root.text
+            secondary_text: root.secondary_text
+            tertiary_text: root.tertiary_text
+            #ripple_behaviour:  True
+            #_no_ripple_effect: True
+            focus_behavior: True
+            bg_color: "F5F5F5"
+                    
+#######################################
+
+<MainLayout>:
+    screen_manager: screen_manager1
+    bottom_navigation: bottom_nav
+    ScreenManager:
+        id: screen_manager1
+        home: reg_screen
+        Screen:
+            id: login_screen
+            name: "login_screen"
+
+            BoxLayout:
+                orientation: "vertical"
+                size: root.width, root.height
+                canvas.before:
+                    Rectangle:
+                        pos: self.pos
+                        size: self.size
+                        source: "bgmain2.jpg"
+                    
+                padding: 60
+                spacing: 70
+                
+                FloatLayout:
+                    background_normal: '' 
+                    background_color: (1,1,1,0.75) 
+                    canvas.before:
+                        Color:
+                            rgba: self.background_color
+                        RoundedRectangle:
+                            pos: self.pos
+                            size: self.size
+                            radius: [25,]    
+                    Label:
+                        text: "S I G N I N"
+                        bold: True
+                        font_size: '50sp'
+                        underline: True
+                        size_hint: None,None
+                        color: (251/255, 192/255, 45/255, 1)
+                        pos_hint: {'center_x': 0.5, 'center_y': 0.85}
+
+                    MDTextField:
+                        id: log_username
+                        hint_text: "Username"
+                        #validator: 'email'
+                        font_size: "25sp"
+                        size_hint: None,None
+                        size: dp(395), dp(45)  
+                        pos_hint: {'center_x': 0.5, 'center_y': 0.65}
+                    
+                    CustomPasswordField:
+                        id: log_password
+                        hint_text: "Password"
+                        password: True
+                        font_size: "25sp"
+                        size_hint: None,None
+                        size: dp(395), dp(45)  
+                        pos_hint: {'center_x': 0.5, 'center_y': 0.55}
+
+                    MDFillRoundFlatButton:
+                        text: '{:^55}'.format('Login')  #pad blank spaces left and right
+                        font_size: "25sp"
+                        size_hint: None,None
+                        size: dp(395), dp(45)  
+                        pos_hint: {'center_x': 0.5, 'center_y': 0.46}
+                        on_release: root.login_account()
+                    
+                    Label:
+                        text: "Forgot password?"
+                        color: (249/255, 168/255, 37/255, 1)
+                        font_size: '18sp'
+                        size_hint: None,None
+                        size: dp(255), dp(45)  
+                        pos_hint: {'center_x': 0.5, 'center_y': 0.40}
+                        text_size: self.size
+                        valign: "top"
+                        halign: "center"  
+
+                    Label:
+                        text: "Don't have an account?"
+                        text_size: self.size
+                        halign: "left"
+                        valign: "bottom"
+                        color: "#546e7a"
+                        font_size: '16sp'
+                        size_hint: None,None
+                        size: dp(350), dp(40)  
+                        pos_hint: {'x': 0.065, 'center_y': 0.06}
+                    MDFillRoundFlatButton:
+                        text: '{:^30}'.format('Register')  #pad blank spaces left and right
+                        font_size: "18sp"
+                        size_hint: None,None
+                        md_bg_color: "orange"
+                        size: dp(150), dp(40)  
+                        pos_hint: {'center_x': 0.75, 'center_y': 0.06}
+                        on_release: 
+                            screen_manager1.current = "reg_screen"
+                            screen_manager1.transition.direction = "left"
+        
+        Screen:
+            id: reg_screen
+            name: "reg_screen"
+
+            BoxLayout:
+
+                orientation: "vertical"
+                size: root.width, root.height
+                canvas.before:
+                    Rectangle:
+                        pos: self.pos
+                        size: self.size
+                        source: "bgmain2.jpg"
+                    
+                padding: "60dp"
+                spacing: "20dp"
+                
+                FloatLayout:
+                    background_normal: '' 
+                    background_color: (1,1,1,0.75) 
+                    canvas.before:
+                        Color:
+                            rgba: self.background_color
+                        RoundedRectangle:
+                            pos: self.pos
+                            size: self.size
+                            radius: [25,]    
+                    Label:
+                        text: "Registration"
+                        bold: True
+                        font_size: "50sp"
+                        underline: True
+                        color: (251/255, 192/255, 45/255, 1)
+                        size_hint: None,None
+                        pos_hint: {'x': 0.2, 'center_y': 0.85}
+
+                    MDTextField:
+                        id: username
+                        hint_text: "Username"
+                        required: True
+                        helper_text_mode: "on_error"
+                        helper_text: "Enter a valid username" 
+                        size_hint: None,None
+                        font_size: "18sp"
+                        size: dp(500), dp(45)  
+                        pos_hint: {'center_x': 0.5, 'center_y': 0.75}
+                        
+                    
+                    MDTextField:
+                        id: firstname
+                        hint_text: "First Name"
+                        required: True
+                        helper_text_mode: "on_error"
+                        helper_text: "Enter first name" 
+                        size_hint: None,None
+                        font_size: "18sp"
+                        size: dp(500), dp(45)  
+                        pos_hint: {'center_x': 0.5, 'center_y': 0.67}
+
+                    MDTextField:
+                        id: lastname
+                        hint_text: "Last Name"
+                        required: True
+                        helper_text_mode: "on_error"
+                        helper_text: "Enter last name" 
+                        size_hint: None,None
+                        font_size: "18sp"
+                        size: dp(500), dp(45)  
+                        pos_hint: {'center_x': 0.5, 'center_y': 0.59}
+                    
+                    MDTextField:
+                        id: email
+                        hint_text: "Email"
+                        validator: 'email'
+                        required: True
+                        helper_text_mode: "on_error"
+                        helper_text: "Enter valid email" 
+                        font_size: "18sp"
+                        size_hint: None,None
+                        size: dp(500), dp(45)  
+                        pos_hint: {'center_x': 0.5, 'center_y': 0.51}
+
+                    CustomPasswordRegField:
+                        id: password
+                        text: ""
+                        hint_text: "Password"
+                        password: True
+                        required: True
+                        helper_text_mode: "on_error"
+                        helper_text: "Enter a password" 
+                        size_hint: None,None
+                        font_size: "18sp"
+                        size: dp(500), dp(45)  
+                        pos_hint: {'center_x': 0.5, 'center_y': 0.43}
+                    
+                    MDCheckbox:
+                        id: checkBox
+                        size_hint: None, None
+                        size: "48dp", "48dp"
+                        pos_hint: {'right': .28, 'center_y': .38}
+                        on_state: reg_button.disabled = False if checkBox.active == True else True
+                    
+                    
+                    MDLabel:
+                        text: "Agree with Terms and Conditions"
+                        font_size: "16sp"
+                        theme_text_color: "Custom"
+                        size_hint: None, None
+                        size: dp(600), dp(45)
+                        text_color: "orange"
+                        pos_hint: {'x': .30, 'center_y': .38}
+                    
+                    MDFillRoundFlatButton:
+                        id: reg_button
+                        text: '{:^46}'.format('Signup')  #pad blank spaces left and right
+                        font_size: "25sp"
+                        size_hint: None,None
+                        md_bg_color: "orange"
+                        size: dp(395), dp(45)  
+                        disabled: True
+                        pos_hint: {'center_x': 0.5, 'center_y': 0.15}
+                        on_release: root.register_account(app)
+
+                    MDFlatButton:
+                        text: "[color=#FF9800]I'm already a member[/color]" 
+                        font_size: "16sp"
+                        size_hint: None,None
+                        size: dp(395), dp(45)  
+                        pos_hint: {'center_x': 0.5, 'center_y': 0.08}
+                        on_release: 
+                            screen_manager1.current = "login_screen"
+                            screen_manager1.transition.direction = "right"
+                        
+        Screen:
+            id:dashboard_screen
+            name: 'dashboard_screen'
+            MDBoxLayout:
+                id: dashboard_boxlayout
+                orientation: "vertical"
+                size: root.size
+                MDTopAppBar:
+                    id: top_nav
+                    right_action_items: [["dots-vertical",lambda x: root.open_logout_menu(x)]]
+                
+                MDBottomNavigation:
+                    id: bottom_nav
+                    panel_color: app.theme_cls.primary_color
+                    selected_color_background: None
+                    text_color_active: app.theme_cls.primary_dark
+                    text_color_normal: 1,1,1,1
+                    use_text: False
+                    on_switch_tabs: root.assign_active_tab(*args)
+                    
+                    MDBottomNavigationItem:
+                        name: 'screen 1'
+                        icon: 'home-outline'
+                        on_tab_press: 
+                            top_nav.title = "MDCards"
+                        #badge_icon: "numeric-10"
+                        
+                        ScrollView:
+                            do_scroll_y: True
+                            do_scroll_x: False
+                            MDBoxLayout:
+                                orientation: 'vertical'
+                                adaptive_height: True
+                                padding: '15dp'
+                                spacing: '10dp'
+                                MDCard:
+                                    size_hint: None, None
+                                    size: "450dp", "300dp"
+                                    pos_hint: {"center_x": .5, "center_y": .5}
+                                    elevation: 2
+                                    radius: 36
+                                    on_press: root.image_click()
+                                    MDBoxLayout:
+                                        orientation: 'vertical'
+                                        FitImage:
+                                            source: 'https://picsum.photos/id/23/200/100'
+                                            radius: 36
+                                        MDLabel:
+                                            text: 'Title'
+                                            bold: True
+                                            halign: 'left'
+                                            size_hint: 1, 0.4
+                                            pos_hint: {"x": .05, "center_y": .5}
+                                
+                                MDCard:
+                                    size_hint: None, None
+                                    size: "450dp", "300dp"
+                                    pos_hint: {"center_x": .5, "center_y": .5}
+                                    elevation: 2
+                                    radius: 36
+                                    MDBoxLayout:
+                                        orientation: 'vertical'
+                                        FitImage:
+                                            source: 'https://picsum.photos/id/87/200/100'
+                                            radius: 36
+                                        MDLabel:
+                                            text: 'Title'
+                                            bold: True
+                                            halign: 'left'
+                                            size_hint: 1, 0.4
+                                            pos_hint: {"x": .05, "center_y": .5}
+                                
+                                MDCard:
+                                    size_hint: None, None
+                                    size: "450dp", "300dp"
+                                    pos_hint: {"center_x": .5, "center_y": .5}
+                                    elevation: 2
+                                    radius: 36
+                                    MDBoxLayout:
+                                        orientation: 'vertical'
+                                        FitImage:
+                                            source: 'https://picsum.photos/id/46/200/100'
+                                            radius: 36
+                                        MDLabel:
+                                            text: 'Title'
+                                            bold: True
+                                            halign: 'left'
+                                            size_hint: 1, 0.4
+                                            pos_hint: {"x": .05, "center_y": .5}
+                                MDCard:
+                                    size_hint: None, None
+                                    size: "450dp", "300dp"
+                                    pos_hint: {"center_x": .5, "center_y": .5}
+                                    elevation: 2
+                                    radius: 36
+                                    MDBoxLayout:
+                                        orientation: 'vertical'
+                                        FitImage:
+                                            source: 'https://picsum.photos/id/90/200/100'
+                                            radius: 36
+                                        MDLabel:
+                                            text: 'Title'
+                                            bold: True
+                                            halign: 'left'
+                                            size_hint: 1, 0.4
+                                            pos_hint: {"x": .05, "center_y": .5}
+
+                    MDBottomNavigationItem:
+                        name: 'screen 2'
+                        icon: 'magnify'
+                        on_tab_press: 
+                            root.get_default_date()
+                            top_nav.title = "Date Picker sample"
+
+                        MDTextField:
+                            id: default_date
+                            text: ''
+                            font_size: '24sp'
+                            validator: 'date'
+                            date_format: "mm/dd/yyyy"
+                            on_focus: root.date_open()
+                            pos_hint:  {'center_x': 0.5,'center_y': 0.6}
+                            size_hint_x: 0.7 
+
+                        # MDRaisedButton:
+                        #     text: 'Date Select'
+                        #     font_size: '24sp'
+                        #     on_press: root.date_open()
+                        #     pos_hint:  {'center_x': 0.5,'center_y': 0.5}
+
+                    MDBottomNavigationItem:
+                        name: 'screen 3'
+                        icon: 'plus'
+                        on_tab_press: 
+                            screen_manager1.current = "post_screen"
+                            screen_manager1.transition.direction = "left"
+
+                        #badge_icon: "numeric-10"
+                        
+                        MDLabel:
+                            text: 'Welcome to KivyMD- SECTION 3'
+                            halign: 'center'
+                            font_size: '55sp'
+                            theme_text_color: "Custom"
+                            text_color: app.theme_cls.primary_color
+
+                    MDBottomNavigationItem:
+                        name: 'screen 4'
+                        icon: 'message-processing-outline'
+                        on_tab_press: 
+                            root.load_posts()
+                            top_nav.title = "All Postings"
+                        #badge_icon: "numeric-10"
+                        ScrollView:
+                            do_scroll_y: True
+                            do_scroll_x: False
+                            MDBoxLayout:
+                                id: screen4_boxlayout
+                                orientation: 'vertical'
+                                adaptive_height: True
+                                padding: '15dp'
+                                spacing: '10dp'
+                                
+                                # TwoLineListItem:
+                                #     text: "Two-line item"
+                                #     secondary_text: "Secondary text here"
+                                # TwoLineListItem:
+                                #     text: "Two-line item"
+                                #     secondary_text: "Secondary text here"
+                                # TwoLineListItem:
+                                #     text: "Two-line item"
+                                #     secondary_text: "Secondary text here"
+                                # TwoLineListItem:
+                                #     text: "Two-line item"
+                                #     secondary_text: "Secondary text here"
+                            
+
+
+                    MDBottomNavigationItem:
+                        name: 'screen 5'
+                        icon: 'bell-outline'
+                        on_tab_press: 
+                            root.load_posts('swipe')
+                            top_nav.title = "My Postings(Try swiping)"
+                        #badge_icon: "numeric-10"
+                        
+                        ScrollView:
+                            do_scroll_y: True
+                            do_scroll_x: False
+                            MDBoxLayout:
+                                id: test_id
+                                orientation: 'vertical'
+                                adaptive_height: True
+                                MDList:
+                                    id: screen5_boxlayout
+                                    
+        Screen:
+            id:post_screen
+            name: 'post_screen'
+            MDBoxLayout:
+                orientation: "vertical"
+                size: root.size
+                MDTopAppBar:
+                    left_action_items: [["close", lambda x: root.return_to_dashboard('screen 1')]]
+                    right_action_items: [["send", lambda x: root.insert_post(app)]]
+                FloatLayout:
+                    MDTextField:
+                        id: p_title
+                        hint_text: 'Title'
+                        mode: 'line'
+                        font_size: '16sp'
+                        size_hint_x: 0.9 
+                        pos_hint: {'center_x': 0.5, 'center_y': 0.9}
+                    MDTextField:
+                        id: p_body
+                        hint_text: 'Body'
+                        multiline: True
+                        max_height: "500dp"
+                        mode: 'line'
+                        font_size: '16sp'
+                        size_hint_x: 0.9 
+                        pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+        ViewPostScreen: #A custom screen with custom input receiver
+            id:viewpost_screen
+            rec_id: self.rec_id
+            name: 'viewpost_screen'
+            on_enter: root.load_selected_post()
+            MDBoxLayout:
+                orientation: "vertical"
+                size: root.size
+                MDTopAppBar:
+                    left_action_items: [["close", lambda x: root.return_to_dashboard('screen 4')]]
+                    right_action_items: [["note-edit-outline", lambda x: root.post_record(app)]]
+                ScrollView:
+                    do_scroll_y: True
+                    do_scroll_x: False
+                    GridLayout:
+                        cols: 1
+                        size_hint_y: None
+                        padding: ["15dp","15dp","15dp","25dp"]
+                        spacing: "10dp"
+                        
+                        MDLabel:
+                            id: title_post
+                            font_size: dp(24)
+                            size_hint_y: None
+                            height: self.texture_size[1]
+                        MDLabel:
+                            id: postby_post
+                            font_size: dp(12)
+                            size_hint_y: None
+                            height: self.texture_size[1]
+                        MDLabel:
+                            text: ''
+                            font_size: dp(12)
+                            size_hint_y: None
+                            height: self.texture_size[1]
+                        MDLabel:
+                            id: body_post
+                            size_hint_y: None
+                            height: self.texture_size[1]
+                            font_size: dp(16)
+                            text: ''
+                            
+

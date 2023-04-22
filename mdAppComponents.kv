@@ -1,0 +1,171 @@
+<ClickableTextFieldRound>:
+    size_hint_y: None
+    height: text_field.height
+
+    MDTextField:
+        id: text_field
+        hint_text: root.hint_text
+        text: root.text
+        password: True
+        icon_left: "key-variant"
+        required: True
+        helper_text_mode: "on_error"
+        helper_text: "Invalid Password"
+
+
+    MDIconButton:
+        icon: "eye-off"
+        pos_hint: {"center_y": .5}
+        pos: text_field.width - self.width + dp(8), 0
+        theme_text_color: "Hint"
+        on_release:
+            self.icon = "eye" if self.icon == "eye-off" else "eye-off"
+            text_field.password = False if text_field.password is True else True
+
+<MainLayout>:
+    lscreen5: screen5
+    MDBoxLayout:
+        orientation:'vertical'
+        MDTopAppBar:
+            title: "Navigation Bar"
+            left_action_items: [["menu"]]
+            right_action_items: [['dots-vertical'], ['theme-light-dark', lambda x: root.function_name(app)]]
+            
+        
+        MDBottomNavigation:
+            panel_color: app.theme_cls.primary_color
+            selected_color_background: None
+            text_color_active: app.theme_cls.primary_dark
+            text_color_normal: 1,1,1,1
+            use_text:False
+            #transition_duration: 0.9
+            MDBottomNavigationItem:
+                name: "screen 1"
+                text: "Home"
+                icon: "home-outline"
+                MDLabel:
+                    text: "Welcome to KivyMD"
+                    size_hint: 1,1
+                    pos_hint: {'center_y': .5, 'center_x': .5}
+                    font_size: "55sp"
+                    theme_text_color: "Custom"
+                    text_color: app.theme_cls.primary_color
+                    halign: 'center'
+               
+                
+            MDBottomNavigationItem:
+                name: "screen 2"
+                text: "Search"
+                icon: "magnify"
+                MDLabel: 
+                    text: "KivyMD Buttons"
+                    font_size: "55sp"
+                    theme_text_color: "Custom"
+                    text_color: app.theme_cls.primary_color
+                    pos_hint: {'center_y': .75, 'center_x': .5}
+                    halign: 'center'
+                MDIconButton:
+                    icon: 'facebook'
+                    icon_size: "55sp"
+                    theme_icon_color: 'Custom'
+                    icon_color: app.theme_cls.primary_color
+                    pos_hint: {'center_y': .5, 'center_x': .12}
+                    halign: 'left'
+                MDFloatingActionButton:
+                    icon: 'facebook'
+                    pos_hint: {'center_y': .5, 'center_x': .50}
+                    icon_size: "55sp"
+                    theme_icon_color: 'Custom'
+                    icon_color: app.theme_cls.primary_color
+                    md_bg_color: (132/255, 245/255, 66/255, 1)
+                    halign: 'center'
+                MDFlatButton:
+                    text: "Click Me"
+                    font_size: "50sp"
+                    pos_hint: {'center_y': .5, 'center_x': .80}
+                    theme_text_color: "Custom"
+                    text_color: app.theme_cls.primary_color
+                    halign: 'right'
+                    md_bg_color: (132/255, 245/255, 66/255, 1)
+
+            MDBottomNavigationItem:
+                name: "screen 3"
+                text: "Add"
+                icon: "plus"
+                
+                BoxLayout:
+                    orientation: "vertical"
+                    padding: dp(150)
+                    spacing: dp(30)
+                    MDTextField: 
+                        hint_text: "Email"
+                        mode: "rectangle"
+                        validator: "email"
+                        required: True
+                        helper_text_mode: "on_error"
+                        helper_text: "Email entered is invalid"
+                    
+                    ClickableTextFieldRound:
+                        mode: "rectangle"
+                        hint_text: "Password"
+                        required: True
+                        password: True
+                        theme_text_color: "Custom"
+                        text_color: app.theme_cls.primary_color
+
+                    MDTextField: 
+                        hint_text: "6-digit"
+                        input_filter: "int"
+                        max_text_length: 6
+                        helper_text: "Enter 6-digit Pin"
+                        required: True
+                        mode: "rectangle"
+                        
+
+            MDBottomNavigationItem:
+                name: "screen 4"
+                text: "Messages"
+                icon: "message-processing-outline"
+                
+                MDFlatButton:
+                    text: "Buttons"
+                    font_size: "55sp"
+                    pos_hint: {'center_x': .5, 'center_y': .5}
+                    theme_text_color: "Custom"
+                    text_color: app.theme_cls.primary_color
+                    md_bg_color: (132/255, 245/255, 66/255, 1)
+                    icon_size: "55sp"
+                    on_release: root.show_alert_dialog()
+                    
+               
+                
+                        
+                                
+            MDBottomNavigationItem:
+                id: screen5
+                name: "screen 5"
+                text: "bell-outline"
+                icon: "bell-outline"
+                
+                MDFlatButton:
+                    text: "Spam Click"
+                    font_size: "55sp"
+                    pos_hint: {'center_x': .5, 'center_y': .6}
+                    theme_text_color: "Custom"
+                    text_color: app.theme_cls.primary_color
+                    md_bg_color: (132/255, 245/255, 66/255, 1)
+                    icon_size: "55sp"
+                    halign: 'center'
+                    on_release: root.spam()
+                    
+                
+                MDRaisedButton:
+                    text: "Clear Notif"
+                    font_size: "55sp"
+                    pos_hint: {'center_x': .5, 'center_y': .3}
+                    theme_text_color: "Custom"
+                    text_color: app.theme_cls.primary_color
+                    md_bg_color: (132/255, 245/255, 66/255, 1)
+                    icon_size: "55sp"
+                    halign:'center'
+                    on_press: root.clear()

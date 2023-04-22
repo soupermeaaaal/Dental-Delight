@@ -1,0 +1,718 @@
+#:import toast kivymd.toast.toast
+
+<MDTextField>
+    font_size: '25sp'
+    mode: 'round'
+    fill_color_normal: "white"
+    fill_color_focus: "white"
+    line_color_normal: app.theme_cls.primary_color
+    text_color_normal: app.theme_cls.primary_color
+    helper_text_color_normal: app.theme_cls.primary_color 
+    hint_text_color_normal: app.theme_cls.primary_color
+    hint_text_color_focus: app.theme_cls.primary_color if app.theme_cls.theme_style == "Dark" else "black"
+    text_color_focus: app.theme_cls.primary_color if app.theme_cls.theme_style == "Dark" else "black"
+
+<CustomPasswordFieldRound@MDTextField>:
+    required: True
+    icon_left: "lock"
+    text_color_focus: 209/255,59/255,83/255, 1
+    font_name: "MARY"
+    
+    helper_text_mode: "on_error"
+    max_text_length: 8
+        
+
+    
+
+<CustomPasswordFieldConfirmRound>:
+    size_hint_y: None
+    
+
+    MDTextField:
+        id: Cfield
+        hint_text: root.hint_text
+        text: root.text
+        password: True
+        required: True
+        icon_left: "lock"
+        text_color_focus: 209/255,59/255,83/255, 1
+        font_name: "MARY"
+        helper_text_mode: "on_error"
+        
+
+    MDIconButton:
+        icon: "eye-off"
+        pos_hint: {"center_y": .4, "center_x": .9}
+        on_press:
+            self.icon = "eye" if self.icon == "eye-off" else "eye-off"
+            Cfield.password = False if Cfield.password is True else True
+
+<ClickableTextFieldRound@MDTextField>:
+    required: True
+    icon_left: "lock"
+    text_color_focus: 209/255,59/255,83/255, 1
+    font_name: "MARY"
+    
+    
+
+    
+
+<MainLayout>
+    screen_manager: screen_manager2
+    ScreenManager:
+        id: screen_manager2
+
+        Screen: 
+            id: log_screen
+            name: "log_screen"
+            
+
+            MDFloatLayout:
+                orientation: 'vertical'
+                
+                canvas.before:
+                    Rectangle:
+                        pos: self.pos
+                        size: self.size
+                        source: "loginsc.png"
+                padding: "50dp"
+                spacing: "30dp"
+                
+                MDTextField:
+                    id: emaill
+                    hint_text: "Enter your Email Address"
+                    required: True
+                    helper_text_mode: "on_error"
+                    helper_text: " Enter a valid Email Address"
+                    text_color_focus: 209/255,59/255,83/255, 1
+                    icon_left: 'email'
+                    pos_hint: {'center_x': 0.5, 'center_y': .35}
+                    size_hint: .75, .065
+                    font_name: "MARY"
+                    validator: 'email'
+                    
+                MDFloatLayout:
+
+                    ClickableTextFieldRound:
+                        id: Passwd
+                        fill_color: 0,0,0,.4
+                        hint_text: "Enter your Password"
+                        text_color_focus: 209/255,59/255,83/255, 1
+                        pos_hint: {'center_x': 0.5, 'center_y': .25}
+                        password: True
+                        size_hint: .75, .065
+                        font_name: "MARY"
+                        
+                    MDIconButton:
+                        icon: "eye-off"
+                        pos_hint: {"center_y": .25, "center_x": .8}
+                        on_press:
+                            self.icon = "eye" if self.icon == "eye-off" else "eye-off"
+                            Passwd.password = False if Passwd.password is True else True
+                    
+                MDFillRoundFlatButton:
+                    text:"Sign In"
+                    pos_hint: {'center_x': 0.5, 'center_y': .17}
+                    size_hint: .50, None
+                    font_name: "MARY"
+                    on_press: root.LOG()
+                    
+                    id: signin
+                    
+
+                MDFlatButton:
+                    text:"[color=#D13B53]Register[/color]" 
+                    font_size: "25sp"
+                    underline: True
+                    pos_hint: {"x": .65, "y": .04 }
+                    font_name: "MARY"
+                    on_press: root.LG("register_screen" , "left")
+                
+                        
+                        
+            
+        Screen: 
+            id: register_screen
+            name: "register_screen"
+            MDFloatLayout:
+                orientation: 'vertical'
+                
+                canvas.before:
+                    Rectangle:
+                        pos: self.pos
+                        size: self.size
+                        source: "register.png"
+                padding: "50dp"
+                spacing: "25dp"
+
+                MDTextField:
+                    id: email
+                    hint_text: "Enter your Email Address"
+                    validator: 'email'
+                    helper_text: 'Enter a valid Email Address'
+                    helper_text_mode: 'on_error'
+                    font_name: "MARY"
+                    pos_hint: {'center_x': 0.5, 'center_y': .595}
+                    size_hint: .75, .062
+                    text_color_focus: 209/255,59/255,83/255, 1
+                    required: True
+                MDTextField:
+                    id: fullname
+                    hint_text: "Enter your Full Name"
+                    pos_hint: {'center_x': 0.5, 'center_y': .505}
+                    size_hint: .75, .062
+                    text_color_focus: 209/255,59/255,83/255, 1
+                    font_name: "MARY"
+                    required: True
+                MDTextField:
+                    id: address
+                    hint_text: "Enter your Address"
+                    pos_hint: {'center_x': 0.5, 'center_y': .435}
+                    size_hint: .75, .062
+                    text_color_focus: 209/255,59/255,83/255, 1
+                    font_name: "MARY"
+                    required: True
+
+                MDTextField:
+                    id: pnum
+                    hint_text: "Enter your Phone Number"   
+                    pos_hint: {'center_x': 0.5, 'center_y': .365}
+                    size_hint: .75, .062
+                    text_color_focus: 209/255,59/255,83/255, 1 
+                    font_name: "MARY"
+                    required: True
+                MDFloatLayout:
+                    CustomPasswordFieldRound:
+                        id: text_field
+                        hint_text: "Enter your Password"
+                        password: True
+                        pos_hint: {'center_x': 0.5, 'center_y': .295}
+                        size_hint: .75, .062
+                        helper_text: 'Must contain letters and numbers with 8 characters only!'
+                        text_color_focus: 209/255,59/255,83/255, 1 
+                        font_name: "MARY"
+                        required: True
+                    MDIconButton:
+                        icon: "eye-off"
+                        pos_hint: {"center_y": .295, "right": .87} 
+                        on_press:
+                            self.icon = "eye" if self.icon == "eye-off" else "eye-off"
+                            text_field.password = False if text_field.password is True else True
+                    
+                MDFloatLayout:
+                    CustomPasswordFieldRound:
+                        id: confpass
+                        hint_text: "Enter your Password"
+                        password: True
+                        pos_hint: {'center_x': 0.5, 'center_y': .205}
+                        size_hint: .75, .062
+                        text_color_focus: 209/255,59/255,83/255, 1 
+                        font_name: "MARY"
+                        required: True
+                        on_text: root.checker()
+                        
+                
+
+                    MDIconButton:
+                        icon: "eye-off"
+                        pos_hint: {"center_y": .205, "right": .87} 
+                        on_press:
+                            self.icon = "eye" if self.icon == "eye-off" else "eye-off"
+                            confpass.password = False if confpass.password is True else True
+                
+                    MDLabel:
+                        id: check
+                        text: "" 
+                        pos_hint: {'center_x': .62, 'center_y': .150}    
+                        font_name: "Sniglet"
+                        text_color_focus: 209/255,59/255,83/255, 1 
+                        
+
+                        
+                
+                MDFillRoundFlatButton:
+                    text:"Send"
+                    font_name: "MARY"
+                    underlined:True
+                    size_hint:.5, .05
+                    pos_hint: {"center_x": 0.5, "y": 0.085}
+                    on_press: root.add_user()
+
+                   
+                MDFlatButton:
+                    text: "[color=#D13B53]Have an account?[/color]" 
+                    font_name: "MARY"
+                    size_hint: None,None
+                    font_size: "16sp"
+                    
+                    pos_hint: {'center_x': 0.5, 'center_y': 0.05}
+                    on_release: 
+                        screen_manager2.current = "log_screen"
+                        screen_manager2.transition.direction = "right"
+                    
+
+        Screen: 
+            id: home_screen
+            name: "home_screen"
+            MDBottomAppBar:
+                MDTopAppBar:
+                    title: "Title"
+                    icon: "git"
+                    type: "bottom"
+                    left_action_items: [["menu", lambda x: x]]
+                    mode: "end"
+            MDBoxLayout: 
+                orientation: "vertical"
+                
+                MDCard:
+                    size_hint: None, None
+                    size: "450dp" ,"75dp"
+                    md_bg_color: 220/255, 104/255, 116/255, 1
+                    MDFloatLayout:
+                        MDCard:
+                            md_bg_color: 0,0,0,0
+                            pos_hint: {"center_x": .50, "center_y":.5}
+                            size_hint: None,None
+                            size: "320dp", "75dp"
+                            FitImage: 
+                                source: "1.png"
+                                halign: 'center'
+                
+                                
+                        
+                MDBottomNavigation:
+                    panel_color: 220/255, 104/255, 116/255, 1
+                    selected_color_background: 96.9/255, 80.4/255, 81.6/255, 0
+                    text_color_active: 109/255,18/255,63/255,1
+                    use_text: True
+                    font_name: 'lj'
+                    text_size: "13sp"
+                    text_color_normal: 	247/255, 205/255, 208/255, 1
+                    
+
+                    MDBottomNavigationItem:
+                        name: 'screen 1'
+                        icon: 'home-heart'
+                        text: 'Home'
+                        md_bg_color: 247/255, 205/255, 208/255, 1
+                        
+                        
+ 
+                
+
+                    MDBottomNavigationItem:
+                        name: 'screen 2'
+                        icon: 'calendar-month'
+                        text: 'Appointments'
+                        md_bg_color: 247/255, 205/255, 208/255, 1
+                        
+                        
+                        MDLabel:
+                            text: 'Welcome to Kivy- SECTION 2'
+                            halign: 'center'
+                            font_size: '55sp'
+                            text_color: app.theme_cls.primary_color
+                        
+        
+                    MDBottomNavigationItem:
+                        name: 'screen 3'
+                        icon: 'tooth-outline'
+                        mode: 'center'
+                        text: 'Schedule'
+                        md_bg_color: 247/255, 205/255, 208/255, 1
+                                  
+                        MDBoxLayout:
+                            orientation: 'vertical'
+                            size: root.width, root.height
+                            
+                            canvas.before:
+                                Color: 
+                                Rectangle:
+                                    size: self.size
+                                    pos: self.pos
+                                    source: "teeth.png"
+
+                            MDCard:
+                                size_hint:None,None
+                                size:root.width,"250dp"
+                                md_bg_color:0,0,0,0
+                                MDFloatLayout:
+                                    MDCard:
+                                        pos_hint:{"center_x":.5, "center_y":1.65}
+                                        size_hint: None,None 
+                                        size: root.width, "10dp"
+                                        md_bg_color: 0,0,0,0
+                                        MDFloatLayout:
+                                            MDCard:
+                                                md_bg_color:"#B84B64"
+                                                pos_hint:{"center_x":.5, "center_y":.87}
+                                                size_hint:None,None
+                                                size:"400dp","150dp"
+                                                MDLabel:
+                                                    text:"SCHEDULE AN\n APPOINTMENT"
+                                                    halign:"center"
+                                                    font_name: "Bob"
+                                                    font_size: "45sp"
+                                                    color:252/255, 192/255, 197/255, 1
+                                            MDCard:
+                                                md_bg_color:0,0,0,0
+                                                pos_hint:{"center_x": .92, "center_y":.83}
+                                                size_hint:None,None
+                                                size:"125dp","125dp"
+                                                FitImage:
+                                                    source:"2.png"
+                                            MDCard:
+                                                md_bg_color:0,0,0,0
+                                                pos_hint:{"center_x":.08, "center_y":.82}
+                                                size_hint:None,None
+                                                size:"125dp","125dp"
+                                                FitImage:
+                                                    source:"lefttruee.png"
+
+                            MDCard: 
+                                size_hint:None,None
+                                size:root.width,"150dp"
+                                md_bg_color: 0,0,0,0
+                                
+                                MDBoxLayout:
+                                    orientation:"vertical"
+                                    MDCard:
+                                        size_hint:None,None
+                                        size:root.width,"250dp"
+                                        md_bg_color: 0,0,0,0
+                                        MDBoxLayout:
+                                            orientation:"vertical"
+                                            padding: "10dp"
+                                            MDLabel:
+                                                text: " CHOOSE YOUR SERVICE"
+                                                color: "#6D123F"
+                                                font_name:"Bob"
+                                                font_size: "23sp"
+                                            MDCard:
+                                                md_bg_color: 0,0,0,0
+                                                MDFloatLayout:
+                                                    line_color: 109/255, 18/255, 63/255,1
+                                                    radius: "25dp"
+                                                    MDDropDownItem:
+                                                        id: lserv
+                                                        text: "[font=lj]Choose your Service[/font]"  
+                                                        text_size: "25sp"
+                                                        text_color: "#6D123F"
+                                                        pos_hint: {'center_x':.5, 'center_y':.5}
+                                                        on_release: root.serv.open()
+                                            
+                                            MDLabel: 
+                                                text: " CHOOSE YOUR DOCTOR"
+                                                color: "#6D123F"
+                                                font_name:"Bob"
+                                                font_size: "23sp"
+                                                halign: "left"
+                                            MDCard:
+                                                md_bg_color: 0,0,0,0
+                                                MDFloatLayout:
+                                                    line_color: 109/255, 18/255, 63/255,1
+                                                    radius: "25dp" 
+                                                    MDDropDownItem:
+                                                        id: drop_item
+                                                        text: "[font=lj]Choose your Doctor[/font]"
+                                                        text_color: "#6D123F"
+                                                        pos_hint:{'center_x':.5, 'center_y':.5}
+                                                        on_release: root.menu.open()
+                                            MDLabel: 
+                                                text: " CHOOSE DATE AND TIME"
+                                                color: "#6D123F"
+                                                font_name:"Bob"
+                                                font_size: "23sp"
+                                    MDCard:
+                                        size_hint:None,None
+                                        size:root.width,"200dp"
+                                        md_bg_color: 0,0,0,0
+                                        MDBoxLayout:
+                                            orientation:'horizontal'
+                                            size_hint:None,None
+                                            size:root.width,root.height
+                                            md_bg_color: 0,0,0,0
+                                            MDCard:
+                                                md_bg_color:0,0,0,0
+                                                MDFloatLayout:
+
+                                                    MDRaisedButton:
+                                                        text: "Open date picker"
+                                                        pos_hint: {'center_x': .5, 'center_y': .5}
+                                                        
+                                                        on_release: root.date_picker()
+                                            MDCard:
+                                                md_bg_color:0,0,0,0
+                                                MDFloatLayout: 
+                                                    md_bg_color:0,0,0,0
+                                                
+                                                    MDChip:
+                                                        id: chip_box
+                                                        text: "1:00PM"
+                                                        line_color: 109/255, 18/255, 63/255,1
+                                                        text_color: "#5B3121"
+                                                        md_bg_color: "#F7CDD0"
+                                                        selected_chip_background: "#6D123F"
+                                                        pos_hint: {'center_x': .70, 'center_y': .25}
+                                                        on_press: if self.active: root.removes_marks_all_chips(self)
+                                                    MDChip:
+                                                        id: chip_box
+                                                        text: "1:30PM"
+                                                        line_color: 109/255, 18/255, 63/255,1
+                                                        text_color: "#5B3121"
+                                                        pos_hint: {'center_x': .70, 'center_y': .20}
+                                                        md_bg_color: "#F7CDD0"
+                                                        selected_chip_color: "#6D123F"
+                                                        on_press: if self.active: root.removes_marks_all_chips(self)
+                                                    
+                                                    MDChip:
+                                                        id: chip_box
+                                                        text: "2:00PM"
+                                                        pos_hint: {'center_x': .70, 'center_y': .15}
+                                                        line_color: 109/255, 18/255, 63/255,1
+                                                        text_color: "#5B3121"
+                                                        md_bg_color: "#F7CDD0"
+                                                        selected_chip_background: "#6D123F"
+                                                        on_press: if self.active: root.removes_marks_all_chips(self)
+
+                                                    MDChip:
+                                                        id: chip_box
+                                                        text: "2:30PM"
+                                                        line_color: 109/255, 18/255, 63/255,1
+                                                        text_color: "#5B3121"
+                                                        pos_hint: {'center_x': .70, 'center_y': .1}
+                                                        md_bg_color: "#F7CDD0"
+                                                        selected_chip_background: "#6D123F"
+                                                        on_press: if self.active: root.removes_marks_all_chips(self)
+                                                    MDChip:
+                                                        id: chip_box
+                                                        text: "3:00PM"
+                                                
+                                                        line_color: 109/255, 18/255, 63/255,1
+                                                        pos_hint: {'center_x': .70, 'center_y': .05}
+                                                        text_color: "#5B3121"
+                                                        md_bg_color: "#F7CDD0"
+                                                        selected_chip_background: "#6D123F"
+                                                        on_press: if self.active: root.removes_marks_all_chips(self)
+
+                                                    
+                                    MDCard:
+                                        size_hint:None,None
+                                        size:root.width,"50dp"
+                                        md_bg_color: 0,0,0,0
+                                        MDFloatLayout:
+                                            md_bg_color: 0,0,0,0
+                                            MDGridLayout:
+                                                md_bg_color:'green'
+                                                cols: 2
+                                                spacing: "50dp"
+                                                halign: "center"
+                                                
+                                                
+                                                MDFillRoundFlatButton:
+                                                    text:"[color=#ffefe5][u]CLEAR[/u]"
+                                                    font_size: "25sp"
+                                                    color: 184/255, 75/255, 100/255,1
+                                                    
+                                                    halign: "center"
+
+                                                MDFillRoundFlatButton:
+                                                    text:"[color=#ffefe5][u]SCHEDULE[/u]"
+                                                    font_size: "25sp"
+                                                    halign: 'center'
+                                                    color: 184/255, 75/255, 100/255,1
+                    
+                    MDBottomNavigationItem:
+                        name: 'screen 4'
+                        icon: 'cash-clock'
+                        text: 'Payment History'
+                        md_bg_color: 247/255, 205/255, 208/255, 1
+                        
+                       
+                           
+
+                    MDBottomNavigationItem:
+                        name: 'screen 5'
+                        icon: 'account-circle'
+                        text: 'Profile'
+                        md_bg_color: 247/255, 205/255, 208/255, 1
+                        
+                        MDBoxLayout:
+                            orientation:'vertical'
+                            padding: '15dp'
+                            spacing: '6dp'
+                            MDCard:
+                                md_bg_color: '#6D123F'
+                                size_hint: None,None
+                                size: '320dp','100dp'
+                                MDBoxLayout:
+                                    orientation: 'horizontal'
+                                    padding: '3dp'
+                                    MDCard:
+                                        md_bg_color: '#F7CDD0'
+                                        MDCard: 
+                                            md_bg_color:0,0,0,0
+                                            size_hint: None,None
+                                            size: '230dp', '94dp'
+                                            padding: 10,0,0,0
+                                            MDBoxLayout:
+                                                orientation:'vertical'
+                                                Widget:
+                                                MDLabel:
+                                                    text:'PALAPAR, Michaela'
+                                                    color: '#6D123F'
+                                                    font_size: '30sp'
+                                                    bold: True
+                                                    font_name: "MARY"
+                                                MDLabel:
+                                                    text: 'Member no. 12345'
+                                                    color: '#6D123F'
+                                                Widget:
+                                        MDCard:
+                                            md_bg_color: 0,0,0,0
+                                            MDFloatLayout:
+                                                orientation:'vertical'
+                                                MDIconButton: 
+                                                    icon: 'account-edit'
+                                                    theme_icon_color: 'Custom'
+                                                    icon_color: '#B84C65'
+                                                    icon_size: '50sp'
+                                                    pos_hint: {'center_x': .5 , 'center_y': .6 }
+                                                MDLabel:
+                                                    text: 'Edit'
+                                                    font_name: "Sniglet"
+                                                    color: '#B84C65'
+                                                    text_size: '10sp'
+                                                    halign: 'center'
+                                                    pos_hint: {'center_x': .5 , 'center_y': .2 }
+                            MDBoxLayout:
+                                md_bg_color: 0,0,0,0
+                                orientation: 'vertical'
+                                spacing: '3dp'
+                                size_hint: None,None
+                                size: '20dp', '7dp'
+                                MDCard:
+                                    size_hint: None,None
+                                    size: '320dp', '3dp'
+                                    md_bg_color: '#6D123F'
+                                    pos_hint: 
+                                MDCard:
+                                    size_hint: None,None
+                                    size: '320dp', '3dp'
+                                    md_bg_color: '#6D123F'
+                            MDCard:
+                                md_bg_color: '#6D123F'
+                                padding: '3dp'
+                                MDCard:
+                                    md_bg_color: 'white'
+                                    MDBoxLayout:
+                                        orientation: 'vertical'
+                                        padding: '3dp'
+                                        MDLabel:
+                                            text: ' CONTACT US AT:'
+                                            color:'#6D123F'
+                                            bold: True
+                                            font_size: '30sp'
+                                            font_name: "Bob"
+                                        MDBoxLayout: 
+                                            orientation:'horizontal'
+                                            MDCard:
+                                                md_bg_color: 0,0,0,0
+                                                MDFloatLayout:
+                                                    MDIconButton:
+                                                        icon: 'tw.png'
+                                                        theme_icon_color: 'Custom'
+                                                        icon_color: '#2D78DA'
+                                                        icon_size: '50sp'
+                                                        disabled: True
+                                                        pos_hint: {'center_x': .4 , 'center_y': .6 }
+                                            MDCard:
+                                                md_bg_color: 0,0,0,0
+                                                size_hint: None,None
+                                                size: '230dp', '52dp'
+                                                MDLabel:
+                                                    text: 'Dental Delight'
+                                                    halign: 'center'
+                                                    font_name: "lit"
+                                                    color: '#D13B53'
+                                        MDBoxLayout: 
+                                            orientation:'horizontal'
+                                            MDCard:
+                                                md_bg_color: 0,0,0,0
+                                                MDFloatLayout:
+                                                    
+                                                    MDIconButton:
+                                                        icon: 'fb.png'
+                                                        theme_icon_color: 'Custom'
+                                                        icon_color: '#2D78DA'
+                                                        icon_size: '70sp'
+                                                        disabled: True
+                                                        pos_hint: {'center_x': .4 , 'center_y': .6 }
+                                            MDCard:
+                                                md_bg_color: 0,0,0,0
+                                                size_hint: None,None
+                                                size: '230dp', '52dp'
+                                                MDLabel:
+                                                    text: 'Dental Delight'
+                                                    halign: 'center'
+                                                    font_name: "lit"
+                                                    color: '#D13B53'
+                                        MDBoxLayout: 
+                                            orientation:'horizontal'
+                                            MDCard:
+                                                md_bg_color: 0,0,0,0
+                                                MDIconButton:
+                                                    icon: '../midterm/gm.png'
+                                                    theme_icon_color: 'Custom'
+                                                    icon_color: '#6D123F'
+                                                    icon_size: '35sp'
+                                                    disabled: True
+                                            MDCard:
+                                                md_bg_color: 0,0,0,0
+                                                size_hint: None,None
+                                                size: '230dp', '52dp'
+                                                MDLabel:
+                                                    text: 'dentaldelight@gmail.com'
+                                                    halign: 'center'
+                                                    font_name: "lit"
+                                                    color: '#D13B53'
+                                        MDBoxLayout: 
+                                            orientation:'horizontal'
+                                            MDCard:
+                                                md_bg_color: 0,0,0,0
+                                                MDIconButton:
+                                                    icon: "ph.png"
+                                                    theme_icon_color: 'Custom'
+                                                    icon_color: '#6D123F'
+                                                    icon_size: '40sp'
+                                                    disabled: True
+                                            MDCard:
+                                                md_bg_color: 0,0,0,0
+                                                size_hint: None,None
+                                                size: '230dp', '52dp'
+                                                MDLabel:
+                                                    text: '09123456788'
+                                                    halign: 'center'
+                                                    font_name: "lit"
+                                                    color: '#D13B53'
+                                        MDLabel:
+                                            text: 'LOCATE US AT:'
+                                            bold: True
+                                            color:'#6D123F'
+                                            font_size: '30sp'
+                                            font_name: "Bob"
+                                        MDLabel:
+                                            text: 'Waltermart Dasmariñas 2nd Floor beside Mang Inasal, Dasmariñas City, Cavite'
+                                            halign: 'center'
+                                            font_name: "lit"
+                                            color: '#D13B53'
+                            MDFlatButton:
+                                text: 'LOGOUT'
+                                font_name: "Sniglet"
+                                md_bg_color: 0,0,0,0
+                                theme_text_color: 'Custom'
+                                text_color: '#6D123F'
+                                font_size: "28sp"
+                                on_release: root.logout('log_screen', 'left')
+                        
+                    

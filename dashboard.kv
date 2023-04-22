@@ -1,0 +1,76 @@
+<MainLayout>:   
+   MDBoxLayout:
+        orientation: "vertical"
+        size: root.size
+        MDTopAppBar:
+            title: "Navigation Bar"
+            left_action_items: [["menu"]]
+            right_action_items: [["dots-vertical"],["theme-light-dark"]]
+        
+        MDBottomNavigation:
+            panel_color: app.theme_cls.primary_color
+            selected_color_background: None
+            text_color_active: app.theme_cls.primary_dark
+            text_color_normal: 1,1,1,1
+            use_text: False 
+            transition_duration: 0.9 #animate a fade in screen switch
+
+            MDBottomNavigationItem:
+                name: 'screen 1'
+                icon: 'home-outline'
+                #badge_icon: "numeric-10"
+                
+                MDLabel:
+                    text: 'Welcome to KivyMD- SECTION 1'
+                    halign: 'center'
+                    font_size: '55sp'
+                    theme_text_color: "Custom"
+                    text_color: app.theme_cls.primary_color
+
+            MDBottomNavigationItem:
+                name: 'screen 2'
+                icon: 'magnify'
+                #badge_icon: "numeric-10"
+                
+                MDLabel:
+                    text: 'Welcome to KivyMD- SECTION 2'
+                    halign: 'center'
+                    font_size: '55sp'
+                    theme_text_color: "Custom"
+                    text_color: app.theme_cls.primary_color
+
+            MDBottomNavigationItem:
+                name: 'screen 3'
+                icon: 'plus'
+                #badge_icon: "numeric-10"
+                
+                MDLabel:
+                    text: 'Welcome to KivyMD- SECTION 3'
+                    halign: 'center'
+                    font_size: '55sp'
+                    theme_text_color: "Custom"
+                    text_color: app.theme_cls.primary_color
+
+            MDBottomNavigationItem:
+                name: 'screen 4'
+                icon: 'message-processing-outline'
+                #badge_icon: "numeric-10"
+                
+                MDLabel:
+                    text: 'Welcome to KivyMD- SECTION 4'
+                    halign: 'center'
+                    font_size: '55sp'
+                    theme_text_color: "Custom"
+                    text_color: app.theme_cls.primary_color
+
+            MDBottomNavigationItem:
+                name: 'screen 5'
+                icon: 'bell-outline'
+                #badge_icon: "numeric-10"
+                
+                MDLabel:
+                    text: 'Welcome to KivyMD- SECTION 5'
+                    halign: 'center'
+                    font_size: '55sp'
+                    theme_text_color: "Custom"
+                    text_color: app.theme_cls.primary_color

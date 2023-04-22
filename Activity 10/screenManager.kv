@@ -1,0 +1,536 @@
+#:import Snackbar kivymd.uix.snackbar.Snackbar
+<CCARD> 
+    id: root.id
+    size_hint: None,None
+    size: "280dp","350dp"
+    padding: 4
+    pos_hint: {'center_x': 0.8 , 'center_y': .1}
+    radius: "4dp"  
+    style: "elevated"
+    MDBoxLayout:
+        orientation: 'vertical'
+        Image:
+            id: display_name
+            source: root.source
+            radius: "6dp"
+            allow_stretch: True
+            keep_ratio: False
+        MDBoxLayout:
+            orientation: 'vertical'
+            size_hint_y: 0.3
+            padding: 10
+            MDLabel:
+                text: root.title
+                halign: 'left'
+                valign: 'top'
+                text_size: self.size
+                bold: True                                        
+                font_size: '25sp'                              
+                size_hint_y: 0.6
+            MDLabel:
+                text: root.group
+                halign: 'left'
+                valign: 'top'
+                text_size: self.size
+                bold: True
+                font_size: '16sp'
+                theme_text_color: 'Secondary'                              
+                size_hint_y: 0.4
+
+<CustomSnackbar>
+    MDIconButton:
+        pos_hint: {'center_y': .7}
+        icon: "close-circle"
+        opposite_colors: True
+        
+    MDLabel:
+        id: text_bar
+        size_hint_y: None
+        height: self.texture_size[1]
+        text: "This is a sample snackbar error!"
+        font_size: root.font_size
+        theme_text_color: 'Custom'
+        text_color: 'ffffff'
+        shorten: True
+        shorten_from: 'right'
+        pos_hint: {'center_y': .5}
+
+<MainLayout>
+    screen_manager: screen_manager1
+    ScreenManager:
+        id: screen_manager1
+
+        Screen: 
+            id: login_screen
+            name: "login_screen"
+
+            MDBoxLayout:
+                orientation: 'vertical'
+                padding: "130dp"
+                spacing: "20dp"
+                MDLabel:
+                    text: "Login Screen"
+                    halign: "center"
+                MDTextField:
+                    id:unname
+                    hint_text: "username"
+                MDTextField:
+                    id: lpasss
+                    hint_text: "password"
+                    password: True
+                MDRoundFlatButton:
+                    text:"Sign In"
+                    size_hint: 0.4, 0.1
+                    pos_hint: {"center_x": 0.5}
+                    on_press: root.Login()
+                MDRoundFlatButton:
+                    text:"Register Here"
+                    size_hint: 0.4, 0.1
+                    pos_hint: {"center_x": 0.5}
+                    on_press: root.LS("reg_screen" , "left")
+        
+        Screen: 
+            id: reg_screen
+            name: "reg_screen"
+            MDBoxLayout:
+                orientation: 'vertical'
+                padding: "130dp"
+                spacing: "20dp"
+                MDLabel:
+                    text: "Registration Screen"
+                    halign: "center"
+                MDTextField:
+                    id: uname
+                    hint_text: "username"
+                MDTextField:
+                    id: fname
+                    hint_text: "First Name"
+                MDTextField:
+                    id: lname
+                    hint_text: "Last Name"
+                MDTextField:
+                    id: email
+                    hint_text: "Email"
+                    validator: 'email'
+                    helper_text: 'email format required'
+                    helper_text_mode: 'on_error'
+                MDTextField:
+                    id: lpass
+                    hint_text: "password"
+                    password: True
+                MDRoundFlatButton:
+                    text:"Sign Up"
+                    size_hint: 0.4, 0.1
+                    pos_hint: {"center_x": 0.5, "y": 0.5}
+                    on_press: root.RS()
+                    
+
+        Screen: 
+            id: dash_screen
+            name: "dashboard_screen"
+
+            MDBoxLayout:
+                orientation: "vertical"
+                size: root.size
+                MDTopAppBar:
+                    title: "Navigation Bar"
+                    left_action_items: [["menu"]]
+                    right_action_items: [["dots-vertical"],["theme-light-dark" ,lambda x: root.LS("login_screen" , "left")]]
+                
+                MDBottomNavigation:
+                    panel_color: app.theme_cls.primary_color
+                    selected_color_background: None
+                    text_color_active: app.theme_cls.primary_dark
+                    text_color_normal: 1,1,1,1
+                    use_text: False 
+                   
+
+                    MDBottomNavigationItem:
+                        name: 'screen 1'
+                        icon: 'home-outline'
+                        #badge_icon: "numeric-10"
+                        
+                        ScrollView: 
+                            do_scroll_y: True
+                            do_scroll_x: False
+                            MDBoxLayout:
+                                
+                                orientation: 'vertical'
+                                adaptive_height: True
+                                padding: '15dp'
+                                spacing: '10dp'
+                                MDLabel:
+                                    text: 'View 1'
+                                    halign: 'left'
+                                    font_size: '55sp'
+                                    theme_text_color: "Custom"
+                                    text_color: app.theme_cls.primary_color
+                                MDLabel:
+                                    text: 'View 2'
+                                    halign: 'center'
+                                    font_size: '55sp'
+                                    theme_text_color: "Custom"
+                                    text_color: app.theme_cls.primary_color
+                                MDLabel:
+                                    text: 'View 3'
+                                    halign: 'right'
+                                    font_size: '55sp'
+                                    theme_text_color: "Custom"
+                                    text_color: app.theme_cls.primary_color
+                    MDBottomNavigationItem:
+                        name: 'screen 2'
+                        icon: 'magnify'
+                        on_tab_press: root.load_cards()
+                        #badge_icon: "numeric-10"
+                        ScrollView: 
+                            do_scroll_y: True
+                            do_scroll_x: True
+                            MDGridLayout:
+                                id: scrn2
+                                size_hint_y: None
+                                cols: 2
+                                width: self.minimum_width
+                                height: self.minimum_height
+                                padding: 15
+                                spacing:20
+                                # MDCard:
+                                #     size_hint: None,None
+                                #     size: "280dp","350dp"
+                                #     padding: 4
+                                #     pos_hint: {'center_x': 0.2 , 'center_y': .1}
+                                #     radius: "4dp"  
+                                #     style: "elevated"
+
+                                #     MDBoxLayout:
+                                #         orientation: 'vertical'
+                                #         Image:
+                                #             source: 'https://i.guim.co.uk/img/media/af346ca13f1186e7bc84e3891f1df9e78ebcdb68/0_249_7360_4414/master/7360.jpg?width=1200&height=1200&quality=85&auto=format&fit=crop&s=235429fea81fa671a2b580ccff73f2e9'
+                                #             radius: "6dp"
+                                #             allow_stretch: True
+                                #             keep_ratio: False
+                                #         MDBoxLayout:
+                                #             orientation: 'vertical'
+                                #             size_hint_y: 0.3
+                                #             padding: 10
+                                #             MDLabel:
+                                #                 text: 'Watermelon'
+                                #                 halign: 'left'
+                                #                 valign: 'top'
+                                #                 text_size: self.size
+                                #                 bold: True                                        
+                                #                 font_size: '25sp'                              
+                                #                 size_hint_y: 0.6
+                                #             MDLabel:
+                                #                 text: '6.7 MB'
+                                #                 halign: 'left'
+                                #                 valign: 'top'
+                                #                 text_size: self.size
+                                #                 bold: True
+                                #                 font_size: '16sp'
+                                #                 theme_text_color: 'Secondary'                              
+                                #                 size_hint_y: 0.4
+
+                                # MDCard:
+                                #     size_hint: None,None
+                                #     size: "280dp","350dp"
+                                #     padding: 4
+                                #     pos_hint: {'center_x': 0.8 , 'center_y': .1}
+                                #     radius: "4dp"  
+                                #     style: "elevated"
+                                #     MDBoxLayout:
+                                #         orientation: 'vertical'
+                                #         FitImage:
+                                #             source: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhUeuu9prjNkDfEFlbmxnVUPaF4wEfx0Uhig&usqp=CAU'
+                                #             radius: "6dp"
+                                #             allow_stretch: True
+                                #             keep_ratio: False
+                                #         MDBoxLayout:
+                                #             orientation: 'vertical'
+                                #             size_hint_y: 0.3
+                                #             padding: 10
+                                #             MDLabel:
+                                #                 text: 'Strawberry'
+                                #                 halign: 'left'
+                                #                 valign: 'top'
+                                #                 text_size: self.size
+                                #                 bold: True                                        
+                                #                 font_size: '25sp'                              
+                                #                 size_hint_y: 0.6
+                                #             MDLabel:
+                                #                 text: '6.7 MB'
+                                #                 halign: 'left'
+                                #                 valign: 'top'
+                                #                 text_size: self.size
+                                #                 bold: True
+                                #                 font_size: '16sp'
+                                #                 theme_text_color: 'Secondary'                              
+                                #                 size_hint_y: 0.4
+                            
+                                # MDCard:
+                                #     size_hint: None,None
+                                #     size: "280dp","350dp"
+                                #     padding: 4
+                                #     pos_hint: {'center_x': 0.8, 'center_y': .04}
+                                #     radius: "4dp"  
+                                #     style: "elevated"
+                                #     MDBoxLayout:
+                                #         orientation: 'vertical'
+                                #         FitImage:
+                                #             source: 'https://w7.pngwing.com/pngs/357/717/png-transparent-orange-fruit-orange-fruit-orange-clipart.png'
+                                #             radius: "6dp"
+                                #             allow_stretch: True
+                                #             keep_ratio: False
+                                #         MDBoxLayout:
+                                #             orientation: 'vertical'
+                                #             size_hint_y: 0.3
+                                #             padding: 10
+                                #             MDLabel:
+                                #                 text: 'Orange'
+                                #                 halign: 'left'
+                                #                 valign: 'top'
+                                #                 text_size: self.size
+                                #                 bold: True                                        
+                                #                 font_size: '25sp'                              
+                                #                 size_hint_y: 0.6
+                                #             MDLabel:
+                                #                 text: '6.7 MB'
+                                #                 halign: 'left'
+                                #                 valign: 'top'
+                                #                 text_size: self.size
+                                #                 bold: True
+                                #                 font_size: '16sp'
+                                #                 theme_text_color: 'Secondary'                              
+                                #                 size_hint_y: 0.4
+                                
+                                # MDCard:
+                                #     size_hint: None,None
+                                #     size: "280dp","350dp"
+                                #     padding: 4
+                                #     pos_hint: {'center_x': 0.2, 'center_y': .04}
+                                #     radius: "4dp"  
+                                #     style: "elevated"
+                                #     MDBoxLayout:
+                                #         orientation: 'vertical'
+                                #         FitImage:
+                                #             source: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQleiSuuvprxkJemen3lE-l1MzL1hANqeZ5Yw&usqp=CAU'
+                                #             radius: "6dp"
+                                #             allow_stretch: True
+                                #             keep_ratio: False
+                                #         MDBoxLayout:
+                                #             orientation: 'vertical'
+                                #             size_hint_y: 0.3
+                                #             padding: 10
+                                #             MDLabel:
+                                #                 text: 'Banana'
+                                #                 halign: 'left'
+                                #                 valign: 'top'
+                                #                 text_size: self.size
+                                #                 bold: True                                        
+                                #                 font_size: '25sp'                              
+                                #                 size_hint_y: 0.6
+                                #             MDLabel:
+                                #                 text: '6.7 MB'
+                                #                 halign: 'left'
+                                #                 valign: 'top'
+                                #                 text_size: self.size
+                                #                 bold: True
+                                #                 font_size: '16sp'
+                                #                 theme_text_color: 'Secondary'                              
+                                #                 size_hint_y: 0.4
+
+                                                        
+
+
+                                                    
+
+                    MDBottomNavigationItem:
+                        name: 'screen 3'
+                        icon: 'plus'
+                        #badge_icon: "numeric-10"
+                        ScrollView: 
+                            
+                            size_hint_x: 1
+                            MDBoxLayout:
+                                adaptive_height: True
+                                orientation: 'vertical'
+                                padding: 15
+                                spacing: 50
+                                MDCard:
+                                    size_hint_y: None
+                                    height: "100dp"
+                                    radius: "15dp"
+                                    md_bg_color: "#BA1721"
+                                    
+                                
+                                    BoxLayout:
+                                        orientation: "horizontal"
+                                        padding: 15
+                                        spacing: 10
+                                        
+                                        MDIconButton:
+                                            icon: "netflix"
+                                            icon_size: "64dp"
+                                            pos_hint: {'center_y': 0.5}
+                                            theme_icon_color: "Custom"
+                                            icon_color: "red"
+                                        MDLabel:
+                                            text: "Watch Movies"
+                                            theme_text_color: "Custom"
+                                            text_color: "white"
+                                            font_size: "25sp"
+                                        MDLabel:
+                                            text: "08:30 PM"
+                                            halign: "right"
+                                            theme_text_color: "Custom"
+                                            text_color: "white"
+                                            font_size: "25sp"
+                                MDCard:
+                                    size_hint_y: None
+                                    height: "100dp"
+                                    radius: "15dp"
+                                    md_bg_color: "#FF8200"
+                                   
+                                    BoxLayout:
+                                        orientation: "horizontal"
+                                        padding: 15
+                                        spacing: 10
+                                    
+                                        MDIconButton:
+                                            icon: "netflix"
+                                            icon_size: "64dp"
+                                            pos_hint: {'center_y': 0.5}
+                                            theme_icon_color: "Custom"
+                                            icon_color: "red"
+                                        MDLabel:
+                                            text: "Watch Movies"
+                                            theme_text_color: "Custom"
+                                            text_color: "white"
+                                            font_size: "25sp"
+                                        MDLabel:
+                                            text: "08:30 PM"
+                                            halign: "right"
+                                            heme_text_color: "Custom"
+                                            text_color: "white"
+                                            font_size: "25sp"
+
+                                MDCard:
+                                    size_hint_y: None
+                                    height: "100dp"
+                                    radius: "15dp"
+                                    md_bg_color: "#FAD293"
+                                    
+
+                                    BoxLayout:
+                                        orientation: "horizontal"
+                                        padding: 15
+                                        spacing: 10
+                                    
+                                        MDIconButton:
+                                            icon: "netflix"
+                                            icon_size: "64dp"
+                                            pos_hint: {'center_y': 0.5}
+                                            theme_icon_color: "Custom"
+                                            icon_color: "red"
+                                        MDLabel:
+                                            text: "Watch Movies"
+                                            theme_text_color: "Custom"
+                                            text_color: "white"
+                                            font_size: "25sp"
+                                        MDLabel:
+                                            text: "08:30 PM"
+                                            halign: "right"
+                                            heme_text_color: "Custom"
+                                            text_color: "white"
+                                            font_size: "25sp"
+                                    
+                                MDCard:
+                                    size_hint_y: None
+                                    height: "100dp"
+                                    radius: "15dp"
+                                    md_bg_color: "#107C41"
+                                   
+
+                                    BoxLayout:
+                                        orientation: "horizontal"
+                                        padding: 15
+                                        spacing: 10
+                                        
+                                        MDIconButton:
+                                            icon: "netflix"
+                                            icon_size: "64dp"
+                                            pos_hint: {'center_y': 0.5}
+                                            theme_icon_color: "Custom"
+                                            icon_color: "red"
+                                        MDLabel:
+                                            text: "Watch Movies"
+                                            theme_text_color: "Custom"
+                                            text_color: "white"
+                                            font_size: "25sp"
+                                        MDLabel:
+                                            text: "08:30 PM"
+                                            halign: "right"
+                                            heme_text_color: "Custom"
+                                            text_color: "white"
+                                            font_size: "25sp"
+                    MDBottomNavigationItem:
+                        name: 'screen 4'
+                        icon: 'heart'
+                        #badge_icon: "numeric-10"
+                        
+                        TwoLineAvatarIconListItem:
+                            pos_hint: {'center_y': 0.9}
+                            text: "Spaced out"
+                            secondary_text: "Khalil wakes up and finds"
+                                                                    
+                            ImageLeftWidget:
+                                source: "https://picsum.photos/id/46/280/350"
+
+                            IconRightWidget:
+                                icon: "menu"
+
+                        TwoLineAvatarIconListItem:
+                            pos_hint: {'center_y': 0.7}
+                            text: "House in the Clouds"
+                            secondary_text: "Khalil wakes up and finds"
+                                                                    
+                            ImageLeftWidget:
+                                source: "https://images.pexels.com/photos/255379/pexels-photo-255379.jpeg?cs=srgb&dl=pexels-miguel-%C3%A1-padri%C3%B1%C3%A1n-255379.jpg&fm=jpg"
+
+                            IconRightWidget:
+                                icon: "menu"
+                            
+                        TwoLineAvatarIconListItem:
+                            pos_hint: {'center_y': 0.5}
+                            text: "Lights Up the Night"
+                            secondary_text: "Khalil wakes up and finds"
+                                                                    
+                            ImageLeftWidget:
+                                source: "https://images.unsplash.com/photo-1544180119-7d88c3d0e171?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxjb2xsZWN0aW9uLXBhZ2V8M3wyMTc3MjE4fHxlbnwwfHx8fA%3D%3D&w=1000&q=80"
+
+                            IconRightWidget:
+                                icon: "menu"
+                    
+                    
+                        
+
+                    MDBottomNavigationItem:
+                        name: 'screen 5'
+                        icon: 'bell-outline'
+                        #badge_icon: "numeric-10"
+                        
+                        MDRaisedButton:
+                            text: "Create simple snackbar"
+                            font_size: "18sp"
+                            on_release: Snackbar(text="This is a snackbar!").open()
+                            pos_hint: {"center_x": .5, "center_y": .9}
+
+                        MDRaisedButton:
+                            text: "Create custom snackbar"
+                            font_size: "18sp"
+                            on_release: root.open_custom_snackbar()
+                            pos_hint: {"center_x": .5, "center_y": .5}
+                        
+                        MDRaisedButton: 
+                            pos_hint: {"center_x": .5, "center_y": .2}
+                            text: "Create Icon snackbar"
+                            on_release:  root.open_icon_snackbar()

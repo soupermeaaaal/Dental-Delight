@@ -1,0 +1,26 @@
+<MainLayout>:    
+    MDBoxLayout:
+        orientation: 'vertical'
+        padding: "130dp"
+        spacing: "20dp"
+        MDLabel:
+            text: "Registration Screen"
+            halign: "center"
+        MDTextField:
+            hint_text: "username"
+        MDTextField:
+            hint_text: "First Name"
+        MDTextField:
+            hint_text: "Last Name"
+        MDTextField:
+            hint_text: "Email"
+            validator: 'email'
+            helper_text: 'email format required'
+            helper_text_mode: 'on_error'
+        MDTextField:
+            hint_text: "password"
+            password: True
+        MDRoundFlatButton:
+            text:"Sign Up"
+            size_hint: 0.4, 0.1
+            pos_hint: {"center_x": 0.5, "y": 0.5}
